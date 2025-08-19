@@ -29,21 +29,36 @@ Paper: https://ieeexplore.ieee.org/document/10802304
 **Location**: [**AIRLab** (The Artificial Intelligence and Robotics Lab of Politecnico di Milano)](https://airlab.deib.polimi.it/)
 
 ## Overview
-- `bt_client`: client designed to interpret and execute LLM-generated behavior trees directly on robot
 - `bt_generator`: demo notebook to load our fine-tuned models for generating behavior trees
+- `bt_client`: client designed to interpret and execute LLM-generated behavior trees directly on robot
 - `bt_validator`: validator that assess the overall correctness of the LLM-generated trees
 - `dataset`: our instruction-following dataset used to fine-tune the models
 - `lora_adapters`: LoRA adapters for the base models, used in the notebook to load the fine-tuned version
 - `prompt`: outcomes of prompts run on both LlamaChat and CodeLlama models, both in zero-shot and one-shot scenarios
 
 ## Setup
+
+### Clone the repo
+
+```
+git clone https://github.com/KalanaRatnayake/BTGenBot.git
+```
+
 ### bt_generator
 
-Create a conda environment (or equivalent virtualenv):
+Enter the folder
+```bash
+cd BTGenBot/bt_generator
 ```
+Create a conda environment
+```bash
 conda create -n btgenbot python==3.10
 ```
-
+or equivalent virtualenv
+```bash 
+python3 -m venv .venv
+source .venv/bin/activate
+```
 Install dependencies:
 ```
 pip install -r requirements.txt
@@ -51,13 +66,48 @@ pip install -r requirements.txt
 
 ### bt_client/bt_validator
 
-Create a colcon workspace and clone this repository in your ROS2 workspace  
-Build:
+Enter the ros2 workspace
+```bash
+cd BTGenBot/workspace/src
+```
+and clone the following packages into it
+
+```bash
+git clone https://github.com/BehaviorTree/BehaviorTree.CPP.git
+git clone https://github.com/BehaviorTree/BehaviorTree.ROS2.git
+git clone https://github.com/KalanaRatnayake/ros2-igus-rebel.git
+git clone https://github.com/KalanaRatnayake/ros2-aruco-pose-estimation.git
+```
+
+remove any old binaries of moveit2
+```bash
+sudo apt remove ros-$ROS_DISTRO-moveit*
+```
+clone moveit from source using following command
+```bash
+git clone https://github.com/moveit/moveit2.git -b main
+for repo in moveit2/moveit2.repos $(f="moveit2/moveit2_$ROS_DISTRO.repos"; test -r $f && echo $f); do vcs import < "$repo"; done
+rosdep install -r --from-paths . --ignore-src --rosdistro $ROS_DISTRO -y
+```
+recheck to remove any moveit packages
+```bash
+sudo apt remove ros-$ROS_DISTRO-moveit*
+```
+clone additional packages from source
+```bash
+git clone https://github.com/moveit/moveit_visual_tools.git
+```
+move to the workspace root and build the packages
 ```
 colcon build
 ```
+if the computer crash during the compiling, compile packages one by one
+```bash
+export MAKEFLAGS="-j 1"
+colcon build --executor sequential
+```
 
-Required ROS2 dependencies:
+### More information:
 - `BehaviorTree.CPP`: available [here](https://github.com/BehaviorTree/BehaviorTree.CPP)
 - `BehaviorTree.ROS2`: available [here](https://github.com/BehaviorTree/BehaviorTree.ROS2)
 - `igus_rebel_commander`: available [here](https://github.com/AIRLab-POLIMI/ros2-igus-rebel), required only by `bt_client` for the task involving arucos and arm activity

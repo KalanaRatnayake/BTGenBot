@@ -2,3 +2,15 @@
 **/install
 **/log
 **/.vscode
+bt_generator/.venv/**
+workspace/build
+workspace/install
+workspace/log
+workspace/src/BehaviorTree.CPP
+workspace/src/BehaviorTree.ROS2
+workspace/src/ros2-igus-rebel
+workspace/src/ros2-aruco-pose-estimation
+workspace/src/moveit2
+workspace/src/moveit_msgs
+workspace/src/moveit_resources
+workspace/src/moveit_visual_tools
