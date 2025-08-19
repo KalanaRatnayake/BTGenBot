@@ -2,19 +2,20 @@
  * @file MoveToWithTimeout.cpp
  * @author Riccardo Andrea Izzo (riccardo.izzo@mail.polimi.it)
  * @version 0.1
- * 
+ *
  * @copyright Copyright (c) 2024
- * 
+ *
  */
 
 #include "MoveToWithTimeout.hpp"
 
-MoveToWithTimeout::MoveToWithTimeout(const std::string& name,
-    const NodeConfig& conf,
-    const RosNodeParams& params)
+MoveToWithTimeout::MoveToWithTimeout(const std::string &name,
+                                     const NodeConfig &conf,
+                                     const RosNodeParams &params)
     : RosActionNode<nav2_msgs::action::NavigateToPose>(name, conf, params)
 {
-    client = params.nh;
+    client = params.nh.lock();
+    ;
     // Set the timeout duration
     timeout_duration = std::chrono::seconds(TIMEOUT);
 }
@@ -41,8 +42,8 @@ bool MoveToWithTimeout::setGoal(RosActionNode::Goal &goal)
     // Check if the location exists in the YAML file
     if (!locations[loc])
     {
-      RCLCPP_ERROR(client->get_logger(), "Location '%s' not found in the YAML file", loc.c_str());
-      return false;
+        RCLCPP_ERROR(client->get_logger(), "Location '%s' not found in the YAML file", loc.c_str());
+        return false;
     }
 
     // Extract the coordinates for the specified location
@@ -65,27 +66,30 @@ bool MoveToWithTimeout::setGoal(RosActionNode::Goal &goal)
 
 // Handle the result received after executing the MoveTo action
 NodeStatus MoveToWithTimeout::onResultReceived(const RosActionNode::WrappedResult &wr)
-{   
+{
     RCLCPP_INFO(client->get_logger(), "Goal reached\n");
     return NodeStatus::SUCCESS;
 }
 
 // Handle failure cases for the MoveTo action
 NodeStatus MoveToWithTimeout::onFailure(ActionNodeErrorCode error)
-{   
-    RCLCPP_ERROR(node_->get_logger(), "Error: %d", error);
+{
+    if (auto node = node_.lock())
+        RCLCPP_ERROR(node->get_logger(), "Error: %d", error);
+    else
+        RCLCPP_ERROR(rclcpp::get_logger("MoveToWithTimeout"), "Error: %d (node expired)", error);
     return NodeStatus::FAILURE;
 }
 
 // Handle feedback during the execution of the MoveTo action
 NodeStatus MoveToWithTimeout::onFeedback(const std::shared_ptr<const Feedback> feedback)
-{   
+{
     auto end_time = std::chrono::steady_clock::now();
     auto elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
 
     // Check if the action succeeded within the timeout
     if (elapsed_time >= timeout_duration)
-    {   
+    {
         RCLCPP_ERROR(client->get_logger(), "Timeout exceeded (20s), goal not reached\n");
         return NodeStatus::FAILURE;
     }

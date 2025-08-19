@@ -2,19 +2,19 @@
  * @file MoveTo.cpp
  * @author Riccardo Andrea Izzo (riccardo.izzo@mail.polimi.it)
  * @version 0.1
- * 
+ *
  * @copyright Copyright (c) 2024
- * 
+ *
  */
 
 #include "MoveTo.hpp"
 
-MoveTo::MoveTo(const std::string& name,
-    const NodeConfig& conf,
-    const RosNodeParams& params)
+MoveTo::MoveTo(const std::string &name,
+               const NodeConfig &conf,
+               const RosNodeParams &params)
     : RosActionNode<nav2_msgs::action::NavigateToPose>(name, conf, params)
 {
-    client = params.nh;
+    client = params.nh.lock();
 }
 
 PortsList MoveTo::providedPorts()
@@ -28,7 +28,15 @@ bool MoveTo::setGoal(RosActionNode::Goal &goal)
 {
     // Retrieve the location from the input port
     std::string loc;
-    getInput("location", loc);
+
+    if (!getInput("location", loc))
+    {
+        if (auto node = node_.lock())
+            RCLCPP_ERROR(node->get_logger(), "Input port 'location' not provided");
+        else
+            RCLCPP_ERROR(rclcpp::get_logger("MoveTo"), "Input port 'location' not provided");
+        return false;
+    }
 
     // Load the YAML file containing location information
     const std::string file_path = client->get_parameter("location_file").as_string();
@@ -50,14 +58,17 @@ bool MoveTo::setGoal(RosActionNode::Goal &goal)
 }
 
 NodeStatus MoveTo::onResultReceived(const RosActionNode::WrappedResult &wr)
-{   
+{
     RCLCPP_INFO(client->get_logger(), "Goal reached\n");
     return NodeStatus::SUCCESS;
 }
 
 NodeStatus MoveTo::onFailure(ActionNodeErrorCode error)
-{   
-    RCLCPP_ERROR(node_->get_logger(), "Error: %d", error);
+{
+    if (auto node = node_.lock())
+        RCLCPP_ERROR(node->get_logger(), "Error: %d", error);
+    else
+        RCLCPP_ERROR(rclcpp::get_logger("MoveTo"), "Error: %d (node expired)", error);
     return NodeStatus::FAILURE;
 }
 
