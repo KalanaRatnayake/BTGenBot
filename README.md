@@ -44,7 +44,7 @@ Paper: https://ieeexplore.ieee.org/document/10802304
 git clone https://github.com/KalanaRatnayake/BTGenBot.git
 ```
 
-### bt_generator
+### bt_generator setup
 
 Enter the folder
 ```bash
@@ -63,6 +63,40 @@ Install dependencies:
 ```
 pip install -r requirements.txt
 ```
+
+### Running ICRA2026 related evaluations on btgenerator
+
+Enter the folder
+```bash
+cd BTGenBot/bt_generator
+```
+
+activate the venv or conda environment
+```bash
+source .venv/bin/activate
+```
+
+Following commands will run the code for each of the tasks available in the tasks folder and write the corresponding plan to workspace/src/bt_client/bt_xml folder with filename format of <model>-<zero>-<original_filename>-<iteration>.xml
+
+To run the BT generation with llamachat
+```bash
+export HF_TOKEN="your_hugging_face_token_here"
+python3 bt_generator/inference-llamachat.py
+```
+
+To run the BT generation with codellama
+```bash
+export HF_TOKEN="your_hugging_face_token_here"
+python3 bt_generator/inference-codellama.py
+```
+
+To run the BT generation with openai
+```bash
+export OPENAI_API_KEY="your_openai_key_here"
+python3 bt_generator/inference-openai.py
+```
+
+Prompts and results will be printed onto the terminal
 
 ### bt_client/bt_validator
 
