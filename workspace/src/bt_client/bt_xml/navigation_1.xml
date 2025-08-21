@@ -1,0 +1,9 @@
+<!-- Navigation -->
+<!-- Visit these locations in sequence: Station A -->
+<root BTCPP_format="4">
+    <BehaviorTree>
+        <Sequence>
+            <MoveTo name="go_to_station_G" location="Station G"/>      <!-- move to Station G -->
+        </Sequence>
+    </BehaviorTree>
+</root>

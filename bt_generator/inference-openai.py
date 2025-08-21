@@ -9,10 +9,11 @@ MODEL = "gpt-4o"  # You can switch to "gpt-4.1" or "o4-mini" if you have access
 # List of test files from tasks folder
 test_file_list = [
     "original.txt",
-    "icra2026-1.txt",
-    "icra2026-2.txt",
-    "icra2026-3.txt",
-    "icra2026-4.txt",
+    "generative_1.txt",
+    "generative_2.txt",
+    "generative_3.txt",
+    "generative_4.txt",
+    "generative_5.txt",
 ]
 
 # Define the context for the task

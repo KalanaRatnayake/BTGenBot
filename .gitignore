@@ -15,3 +15,4 @@ workspace/src/moveit2
 workspace/src/moveit_msgs
 workspace/src/moveit_resources
 workspace/src/moveit_visual_tools
+workspace/src/nav_stack

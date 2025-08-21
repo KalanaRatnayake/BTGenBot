@@ -1,0 +1,28 @@
+<!-- Navigation -->
+<!-- Visit these locations in sequence: Station A -->
+<root BTCPP_format="4">
+    <BehaviorTree>
+        <Sequence>
+            <MoveTo name="go_to_station_G" location="Station G"/>      <!-- move to Station G -->
+            <RecoveryNode number_of_retries="1">
+                <MoveTo name="go_to_station_H" location="Station H"/>      <!-- move to Station H -->
+                <MoveTo name="go_to_station_M" location="Station M"/>      <!-- move to Station M -->
+            </RecoveryNode>
+            <RecoveryNode number_of_retries="1">
+                <MoveTo name="go_to_station_K" location="Station K"/>      <!-- move to Station K -->
+                <MoveTo name="go_to_station_M" location="Station M"/>      <!-- move to Station M -->
+            </RecoveryNode>
+            <RecoveryNode number_of_retries="1">
+                <MoveTo name="go_to_station_L" location="Station L"/>      <!-- move to Station L -->
+                <RecoveryNode number_of_retries="1">
+                    <MoveTo name="go_to_station_N" location="Station N"/>      <!-- move to Station N -->
+                    <MoveTo name="go_to_station_M" location="Station M"/>      <!-- move to Station M -->
+                </RecoveryNode>
+            </RecoveryNode>
+            <RecoveryNode number_of_retries="1">
+                <MoveTo name="go_to_station_C" location="Station C"/>      <!-- move to Station C -->
+                <MoveTo name="go_to_station_M" location="Station M"/>      <!-- move to Station M -->
+            </RecoveryNode>
+        </Sequence>
+    </BehaviorTree>
+</root>

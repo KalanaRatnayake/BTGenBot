@@ -111,6 +111,7 @@ git clone https://github.com/BehaviorTree/BehaviorTree.CPP.git
 git clone https://github.com/BehaviorTree/BehaviorTree.ROS2.git
 git clone https://github.com/KalanaRatnayake/ros2-igus-rebel.git
 git clone https://github.com/KalanaRatnayake/ros2-aruco-pose-estimation.git
+git clone https://github.com/CollaborativeRoboticsLab/nav_stack.git
 ```
 
 remove any old binaries of moveit2
@@ -132,7 +133,7 @@ clone additional packages from source
 git clone https://github.com/moveit/moveit_visual_tools.git
 ```
 move to the workspace root and build the packages
-```
+```bash
 colcon build
 ```
 if the computer crash during the compiling, compile packages one by one
@@ -162,13 +163,28 @@ To add a new behavior tree, follow these steps:
 2. Place the XML file in the `/bt_xml` folder
 3. Specify the name of the XML file in the `config/tree.yaml` configuration file
 
-- Build and source the package
-```
+- Build the workspace
+```bash
+cd BTGenBot/workspace
 colcon build
+```
+
+- Start the simulation
+```bash
 source install/setup.bash
+export TURTLEBOT3_MODEL=waffle
+ros2 launch nav_stack turtlebot3_world.launch.py
 ```
-- Launch the client and execute the selected behavior tree
+
+- Start the navigation stack
+```bash
+source install/setup.bash
+ros2 launch nav_stack system.launch.py
 ```
+
+- Build, source the package and launch the client and execute the selected behavior tree
+```bash
+source install/setup.bash
 ros2 launch bt_client bt.launch.py
 ```
 
