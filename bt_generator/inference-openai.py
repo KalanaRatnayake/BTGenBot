@@ -2,6 +2,7 @@
 from openai import OpenAI
 import sys
 from file_save import save_output_to_file
+import time
 
 client = OpenAI()
 MODEL = "gpt-4o"  # You can switch to "gpt-4.1" or "o4-mini" if you have access
@@ -75,13 +76,19 @@ for name in test_file_list:
         print(task)
 
         # Generate the behavior tree XML using OpenAI using the zero-shot approach
+        start1 = time.time()
         result = generate_bt_with_openai(context, task)
-        print("\nZero-shot OpenAI result:")
+        end1 = time.time()
+        print(f"\nZero-shot OpenAI result (time: {end1 - start1:.2f} seconds):")
+        print("Zero-shot OpenAI result:")
         print(result)
         save_output_to_file("openai-{MODEL}", "zero", task_filename, it, result)
 
         # Generate the behavior tree XML using OpenAI using the one-shot approach
+        start2 = time.time()
         result = generate_bt_with_openai(context, task, example_task, example_output)
-        print("\nOne-shot OpenAI result:")
+        end2 = time.time()
+        print(f"\nOne-shot OpenAI result (time: {end2 - start2:.2f} seconds):")
+        print("One-shot OpenAI result:")
         print(result)
         save_output_to_file("openai-{MODEL}", "one", task_filename, it, result)

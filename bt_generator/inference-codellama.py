@@ -1,9 +1,9 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import PeftModel
 import torch, accelerate
-import sys
 import os
 from file_save import save_output_to_file
+import time
 
 # Load Hugging Face token from environment variable
 hf_token = os.getenv("HF_TOKEN")
@@ -104,28 +104,40 @@ for name in test_file_list:
 
         # Evaluate zero-shot with base model
         with torch.no_grad():
+            start1 = time.time()
             result = tokenizer.decode(base_model.generate(**zero_model_input, max_new_tokens=1000)[0], skip_special_tokens=True)
-            print("\nZero-shot base model result:")
+            end1 = time.time()
+            print(f"\nZero-shot base model result (time: {end1 - start1:.2f} seconds):")
+            print("Zero-shot base model result:")
             print(result)
             save_output_to_file("codellama-base", "zero", task_filename, it, result)
 
         ## Evaluate one-shot with base model
         with torch.no_grad():
+            start2 = time.time()
             result = tokenizer.decode(base_model.generate(**one_model_input, max_new_tokens=1000)[0], skip_special_tokens=True)
-            print("\nOne-shot base model result:")
+            end2 = time.time()
+            print(f"\nOne-shot base model result (time: {end2 - start2:.2f} seconds):")
+            print("One-shot base model result:")
             print(result)
             save_output_to_file("codellama-base", "one", task_filename, it, result)
 
         # Evaluate zero-shot with finetuned model
         with torch.no_grad():
+            start3 = time.time()
             result = tokenizer.decode(finetuned_model.generate(**zero_model_input, max_new_tokens=1000)[0], skip_special_tokens=True)
-            print("\nZero-shot finetuned model result:")
+            end3 = time.time()
+            print(f"\nZero-shot finetuned model result (time: {end3 - start3:.2f} seconds):")
+            print("Zero-shot finetuned model result:")
             print(result)
             save_output_to_file("codellama-finetuned", "zero", task_filename, it, result)
 
         # Evaluate oneshot with finetuned model
         with torch.no_grad():
+            start4 = time.time()
             result = tokenizer.decode(finetuned_model.generate(**one_model_input, max_new_tokens=1000)[0], skip_special_tokens=True)
-            print("\nOne-shot finetuned model result:")
+            end4 = time.time()
+            print(f"\nOne-shot finetuned model result (time: {end4 - start4:.2f} seconds):")
+            print("One-shot finetuned model result:")
             print(result)
             save_output_to_file("codellama-finetuned", "one", task_filename, it, result)
