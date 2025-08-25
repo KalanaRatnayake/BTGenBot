@@ -55,10 +55,7 @@ Create a conda environment
 conda create -n btgenbot python==3.10
 ```
 or equivalent virtualenv
-```bash 
-python3 -m venv .venv
-source .venv/bin/activate
-```
+
 Install dependencies:
 ```
 pip install -r requirements.txt
@@ -75,28 +72,6 @@ activate the venv or conda environment
 ```bash
 source .venv/bin/activate
 ```
-
-Following commands will run the code for each of the tasks available in the tasks folder and write the corresponding plan to workspace/src/bt_client/bt_xml folder with filename format of <model>-<zero>-<original_filename>-<iteration>.xml
-
-To run the BT generation with llamachat
-```bash
-export HF_TOKEN="your_hugging_face_token_here"
-python3 bt_generator/inference-llamachat.py
-```
-
-To run the BT generation with codellama
-```bash
-export HF_TOKEN="your_hugging_face_token_here"
-python3 bt_generator/inference-codellama.py
-```
-
-To run the BT generation with openai
-```bash
-export OPENAI_API_KEY="your_openai_key_here"
-python3 bt_generator/inference-openai.py
-```
-
-Prompts and results will be printed onto the terminal
 
 ### bt_client/bt_validator
 
