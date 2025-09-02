@@ -6,10 +6,10 @@
             <MoveTo name="go_to_station_G" location="Station G"/>      <!-- move to Station G -->
             <MoveTo name="go_to_station_H" location="Station H"/>      <!-- move to Station H -->
             <MoveTo name="go_to_station_I" location="Station I"/>      <!-- move to Station I -->
-            <RecoveryNode number_of_retries="1">
+            <Fallback>
                 <MoveTo name="go_to_station_L" location="Station L"/>      <!-- move to Station L -->
                 <MoveTo name="go_to_station_M" location="Station M"/>      <!-- move to Station M -->
-            </RecoveryNode>
+            </Fallback>
             <MoveTo name="go_to_station_C" location="Station C"/>      <!-- move to Station C -->
         </Sequence>
     </BehaviorTree>
