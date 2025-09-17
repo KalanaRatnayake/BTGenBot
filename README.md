@@ -86,7 +86,7 @@ git clone https://github.com/BehaviorTree/BehaviorTree.CPP.git
 git clone https://github.com/BehaviorTree/BehaviorTree.ROS2.git
 git clone https://github.com/KalanaRatnayake/ros2-igus-rebel.git
 git clone https://github.com/KalanaRatnayake/ros2-aruco-pose-estimation.git
-git clone https://github.com/CollaborativeRoboticsLab/nav_stack.git
+git clone -b humble https://github.com/CollaborativeRoboticsLab/nav_stack.git
 ```
 
 remove any old binaries of moveit2
