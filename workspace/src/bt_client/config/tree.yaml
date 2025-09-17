@@ -1,32 +1,38 @@
 # Select here the name of the behavior tree you want to run
-tree_name: "main_tree.xml"
-# tree_name: "icra2026/generative_1/gpt-5-zeroshot-1.xml"
+# tree_name: "main_tree.xml"
+
+tree_name: "icra2026/generative_1/gpt-5-zeroshot-1.xml"      
+# tree_name: "icra2026/generative_1/gpt-5-oneshot-all.xml"   
 # tree_name: "icra2026/generative_1/llamachat-base-oneshot-all.xml"
 # tree_name: "icra2026/generative_1/llamachat-fine-oneshot-all.xml"
 # tree_name: "icra2026/generative_1/gpt-4o-oneshot-all.xml"
 # tree_name: "icra2026/generative_1/codellama-fine-oneshot-all.xml"
-# tree_name: "icra2026/generative_1/gpt-5-oneshot-all.xml"
 # tree_name: "icra2026/generative_1/codellama-base-oneshot-all.xml"
 # tree_name: "icra2026/generative_1/gpt-4.1-oneshot-all.xml"
+
+# tree_name: "icra2026/generative_2/gpt-5-onehsot-all.xml"    
 # tree_name: "icra2026/generative_2/llamachat-base-oneshot-all.xml"
 # tree_name: "icra2026/generative_2/gpt-4o-onehsot-all.xml"
 # tree_name: "icra2026/generative_2/codellama-fine-oneshot-all.xml"
-# tree_name: "icra2026/generative_2/gpt-5-onehsot-all.xml"
 # tree_name: "icra2026/generative_2/codellama-base-oneshot-all.xml"
 # tree_name: "icra2026/generative_2/llamachat-fine-onehsot-all.xml"
 # tree_name: "icra2026/generative_2/gpt-4.1-oneshot-all.xml"
+
 # tree_name: "icra2026/generative_3/gpt-5-zeroshot-1.xml"
 # tree_name: "icra2026/generative_3/gpt-4o-oneshot-all.xml"
 # tree_name: "icra2026/generative_3/gpt-5-onehsot-all.xml"
 # tree_name: "icra2026/generative_3/gpt-4.1-oneshot-all.xml"
+
 # tree_name: "icra2026/generative_4/gpt-4o-onehsot-all.xml"
 # tree_name: "icra2026/generative_4/gpt-5-oneshot-all.xml"
 # tree_name: "icra2026/generative_4/gpt-4.1-oneshot-all.xml"
+
 # tree_name: "icra2026/generative_5/gpt-4o-oneshot-all.xml"
 # tree_name: "icra2026/generative_5/codellama-fine-oneshot-all.xml"
 # tree_name: "icra2026/generative_5/gpt-5-oneshot-all.xml"
 # tree_name: "icra2026/generative_5/gpt-5-zeroshot-2.xml"
 # tree_name: "icra2026/generative_5/gpt-4.1-oneshot-all.xml"
+
 # tree_name: "demo_task.xml
 # tree_name: "task3a.xml"
 # tree_name: "navigation_4.xml"
